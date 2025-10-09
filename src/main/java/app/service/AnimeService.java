@@ -1,6 +1,7 @@
 package app.service;
 
 import app.domain.Anime;
+import app.exception.BadRequestException;
 import app.mapper.AnimeMapper;
 import app.repository.AnimeRepository;
 import app.requests.AnimePostRequestBody;
@@ -32,9 +33,13 @@ public class AnimeService {
         return animeRepository.findAll();
     }
 
+    public List<Anime> findByName(String name) {
+        return animeRepository.findByName(name);
+    }
+
     public Anime findByIdOrThrowBadRequestException(long id) {
         return animeRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Anime not Found"));
+                .orElseThrow(() -> new BadRequestException("Anime not Found"));
     }
 
     @Transactional

@@ -1,4 +1,4 @@
-package handler;
+package app.handler;
 
 import app.exception.BadRequestException;
 import app.exception.BadRequestExceptionDetails;
