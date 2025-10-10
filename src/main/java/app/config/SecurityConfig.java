@@ -1,8 +1,10 @@
 package app.config;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -14,7 +16,9 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true) 
 @Log4j2
+@RequiredArgsConstructor
 public class SecurityConfig {
 
     @Bean
@@ -24,26 +28,26 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(authorize -> authorize
+        log.info("Password encoded for 'academy': {}", passwordEncoder().encode("academy"));
+
+        http.csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
                         .anyRequest().authenticated()
                 )
-                .httpBasic(httpBasic -> {});
+                .formLogin(form -> {})
+                .httpBasic(basic -> {});
 
         return http.build();
     }
 
     @Bean
-    public InMemoryUserDetailsManager userDetailsService(PasswordEncoder passwordEncoder) {
-        log.info("Password encoded {}", passwordEncoder.encode("test"));
-
-        UserDetails william = User.withUsername("william")
+    public InMemoryUserDetailsManager inMemoryUserDetailsManager(PasswordEncoder passwordEncoder) {
+        UserDetails william = User.withUsername("william2")
                 .password(passwordEncoder.encode("academy"))
                 .roles("USER", "ADMIN")
                 .build();
 
-        UserDetails devdojo = User.withUsername("devdojo")
+        UserDetails devdojo = User.withUsername("devdojo2")
                 .password(passwordEncoder.encode("academy"))
                 .roles("USER")
                 .build();
