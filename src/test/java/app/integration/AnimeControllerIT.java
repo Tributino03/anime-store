@@ -1,6 +1,5 @@
 package app.integration;
 
-// Imports da sua aplicação
 import app.domain.Anime;
 import app.domain.DevDojoUser;
 import app.repository.AnimeRepository;
@@ -10,7 +9,6 @@ import app.util.AnimeCreator;
 import app.util.AnimePostRequestBodyCreator;
 import app.wrapper.PageableResponse;
 
-// Imports de bibliotecas (JUnit, AssertJ, Spring)
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,7 +30,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder; // <-- Import adicionado
 import org.springframework.test.annotation.DirtiesContext;
 
-// Imports do Java
 import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -54,9 +51,8 @@ class AnimeControllerIT {
     private DevDojoUserRepository devDojoUserRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder; // <-- Injetado para criar senhas dinamicamente
+    private PasswordEncoder passwordEncoder;
 
-    // Métodos para criar usuários novos para cada teste, resolvendo o StaleObjectStateException
     private DevDojoUser createTestUser() {
         return DevDojoUser.builder()
                 .name("DevDojo Academy")
@@ -82,14 +78,14 @@ class AnimeControllerIT {
         public TestRestTemplate testRestTemplateRoleUserCreator(@Value("${local.server.port}") int port) {
             RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder()
                     .rootUri("http://localhost:"+port)
-                    .basicAuthentication("devdojo", "test"); // Senha corresponde ao usuário criado
+                    .basicAuthentication("devdojo", "test");
             return new TestRestTemplate(restTemplateBuilder);
         }
         @Bean(name = "testRestTemplateRoleAdmin")
         public TestRestTemplate testRestTemplateRoleAdminCreator(@Value("${local.server.port}") int port) {
             RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder()
                     .rootUri("http://localhost:"+port)
-                    .basicAuthentication("william", "test"); // Senha corresponde ao admin criado
+                    .basicAuthentication("william", "test");
             return new TestRestTemplate(restTemplateBuilder);
         }
     }

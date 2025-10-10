@@ -42,7 +42,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    /*
+
     @Bean
     public InMemoryUserDetailsManager inMemoryUserDetailsManager(PasswordEncoder passwordEncoder) {
         UserDetails william = User.withUsername("william2")
@@ -58,5 +58,5 @@ public class SecurityConfig {
         return new InMemoryUserDetailsManager(william, devdojo);
     }
 
-     */
+
 }
