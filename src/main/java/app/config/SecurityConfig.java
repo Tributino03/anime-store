@@ -32,7 +32,6 @@ public class SecurityConfig {
 
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        // 👉 As regras de autorização foram movidas para cá
                         .requestMatchers("/animes/admin/**").hasRole("ADMIN")
                         .requestMatchers("/animes/**").hasRole("USER")
                         .anyRequest().authenticated()
@@ -43,6 +42,7 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /*
     @Bean
     public InMemoryUserDetailsManager inMemoryUserDetailsManager(PasswordEncoder passwordEncoder) {
         UserDetails william = User.withUsername("william2")
@@ -57,4 +57,6 @@ public class SecurityConfig {
 
         return new InMemoryUserDetailsManager(william, devdojo);
     }
+
+     */
 }
