@@ -16,7 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true) 
+@EnableMethodSecurity(prePostEnabled = true)
 @Log4j2
 @RequiredArgsConstructor
 public class SecurityConfig {
@@ -31,7 +31,10 @@ public class SecurityConfig {
         log.info("Password encoded for 'academy': {}", passwordEncoder().encode("academy"));
 
         http.csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
+                .authorizeHttpRequests(authorize -> authorize
+                        // 👉 As regras de autorização foram movidas para cá
+                        .requestMatchers("/animes/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/animes/**").hasRole("USER")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> {})
