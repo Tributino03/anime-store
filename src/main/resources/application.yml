@@ -11,20 +11,24 @@ spring:
     hibernate:
       ddl-auto: update
 
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
 
-  logging:
-    level:
-      org:
-        hibernate:
-          SQL: DEBUG
+management:
 
-  management:
-    endpoints:
-      web:
-        exposure:
-          include: info, health, metrics
+  endpoint:
+    prometheus:
+      enabled: true
 
-  info:
-    app: Spring Boot 2 Essentials
-    website: https://devdojo.academy
-    github: https://github.com/Tributino03/anime-store
+  endpoints:
+    web:
+      exposure:
+        include: info, health, metrics, prometheus
+
+info:
+  app: Spring Boot 2 Essentials
+  website: https://devdojo.academy
+  github: https://github.com/Tributino03/anime-store
